@@ -5,6 +5,7 @@ using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.TmlHelpers;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
 using HamstarHelpers.Services.ControlPanel;
+using HamstarHelpers.Services.ExtendedHooks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -45,9 +46,15 @@ namespace PlayerStatistics {
 		
 		public override void PostSetupContent() {
 			if( !Main.dedServ ) {
+				// Add player stats tab
 				this.PlayerStatsUI = new UIPlayerStatsTab( UITheme.Vanilla );
-
 				ControlPanelTabs.AddTab( "Player Stats", this.PlayerStatsUI );
+
+				// Register boss kills to indicate progress
+				ExtendedPlayerHooks.AddNpcKillHook( (plr, npc) => {
+					var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( plr );
+					myplayer.RegisterNpcKillIfBoss( npc );
+				} );
 			}
 		}
 
