@@ -37,7 +37,9 @@
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="MyMod.cs" />
+    <Compile Include="MyPlayer.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
+    <Compile Include="UIPlayerStats.cs" />
     <Compile Include="UIPlayerStatsTab.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +73,10 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

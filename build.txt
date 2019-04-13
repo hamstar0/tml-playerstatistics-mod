@@ -1,7 +1,7 @@
 author = hamstar
-version = 0.1
+version = 0.1.0
 displayName = Player Statistics
-modReferences = HamstarHelpers@4.2.7
+modReferences = HamstarHelpers@4.3.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 languageVersion = 6
-homepage = https://forums.terraria.org/index.php?threads/extensible-inventory-limitless-paginated-inventory.72024/
+homepage = https://forums.terraria.org/index.php?threads/pvp-project-making-pvp-great-again.78948/

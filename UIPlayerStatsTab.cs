@@ -1,6 +1,9 @@
-﻿using HamstarHelpers.Components.UI;
+﻿using HamstarHelpers.Components.DataStructures;
+using HamstarHelpers.Components.UI;
 using HamstarHelpers.Internals.ControlPanel;
 using System;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -8,6 +11,7 @@ using Terraria.UI;
 namespace PlayerStatistics {
 	class UIPlayerStatsTab : UIControlPanelTab {
 		private UIList PlayerStatList;
+		private IDictionary<int, UIPlayerStats> ActivePlayerElements = new Dictionary<int, UIPlayerStats>();
 
 
 
@@ -50,21 +54,50 @@ namespace PlayerStatistics {
 			scrollbar.HAlign = 1f;
 			modListPanel.Append( (UIElement)scrollbar );
 			this.PlayerStatList.SetScrollbar( scrollbar );
+		}
+
+
+		////////////////
+
+		public void AddPlayer( Player player ) {
+			var uiPlrStats = new UIPlayerStats( player );
+
+			this.PlayerStatList.Add( uiPlrStats );
+			this.ActivePlayerElements[player.whoAmI] = uiPlrStats;
+		}
+		
+		public void RemovePlayer( int playerWho ) {
+			UIPlayerStats uiPlrStats = this.ActivePlayerElements.GetOrDefault( playerWho );
+
+			if( uiPlrStats != null ) {
+				this.PlayerStatList.RemoveChild( uiPlrStats );
+				uiPlrStats.Remove();
+			}
+
+			this.ActivePlayerElements.Remove( playerWho );
+		}
+
+
+		////////////////
+
+		public void Update() {
+			var mymod = PlayerStatisticsMod.Instance;
 			
-			this.PlayerStatList.AddRange( new UIText[] {
-				new UIText( "a" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" ),
-				new UIText( "b" )
-			} );
+			for( int i = 0; i < Main.player.Length; i++ ) {
+				Player plr = Main.player[i];
+
+				if( plr == null || !plr.active ) {
+					if( this.ActivePlayerElements.ContainsKey(i) ) {
+						this.RemovePlayer( i );
+					}
+				} else {
+					if( !this.ActivePlayerElements.ContainsKey( i ) ) {
+						this.AddPlayer( plr );
+					} else {
+						this.ActivePlayerElements[i].UpdatePlayerInfo();
+					}
+				}
+			}
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace PlayerStatistics {
 		public JsonConfig<PlayerStatisticsConfigData> ConfigJson { get; private set; }
 		public PlayerStatisticsConfigData Config => this.ConfigJson.Data;
 
-		public UIPlayerStatsTab PlayerStats;
+		public UIPlayerStatsTab PlayerStatsUI;
 
 
 
@@ -45,9 +45,9 @@ namespace PlayerStatistics {
 		
 		public override void PostSetupContent() {
 			if( !Main.dedServ ) {
-				this.PlayerStats = new UIPlayerStatsTab( UITheme.Vanilla );
+				this.PlayerStatsUI = new UIPlayerStatsTab( UITheme.Vanilla );
 
-				ControlPanelTabs.AddTab( "Player Stats", this.PlayerStats );
+				ControlPanelTabs.AddTab( "Player Stats", this.PlayerStatsUI );
 			}
 		}
 
