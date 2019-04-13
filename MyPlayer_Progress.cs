@@ -17,6 +17,10 @@ namespace PlayerStatistics {
 		////////////////
 
 		public string FormatVanillaProgress() {
+			if( this.player.whoAmI != Main.myPlayer && !string.IsNullOrEmpty(this.ProgressOveride) ) {
+				return this.ProgressOveride;
+			}
+
 			if( this.BossNpcKills.ContainsKey(NPCID.MoonLordCore) ) {
 				return "Moon Lord Defeated";
 			}
