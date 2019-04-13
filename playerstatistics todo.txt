@@ -1,9 +1,0 @@
-v1
--	Render player statistics to tab (kills, deaths, pvp kills, pvp deaths, team, lag, progress)
--	Create hotkey for opening tab
--	Create tab for PlayerStatistics
-
--	Define tabs for Mod Helpers control panel
-	-	Implement tab buttons when multiple tabs present
-	-	Implement tab add
-	-	Implement tab logic for current control panel UI
