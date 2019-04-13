@@ -1,0 +1,7 @@
+author = hamstar
+version = 0.1
+displayName = Player Statistics
+modReferences = HamstarHelpers@4.2.7
+buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
+languageVersion = 6
+homepage = https://forums.terraria.org/index.php?threads/extensible-inventory-limitless-paginated-inventory.72024/
