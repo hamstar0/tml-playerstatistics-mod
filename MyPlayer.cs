@@ -74,9 +74,15 @@ namespace PlayerStatistics {
 					LogHelpers.Alert( "Player Statistics config could not be loaded." );
 				}
 			} );
+
+			mymod.PlayerStatsUI.ClearPlayers();
 		}
 
 		private void OnConnectCurrentClient() {
+			var mymod = (PlayerStatisticsMod)this.mod;
+
+			mymod.PlayerStatsUI.ClearPlayers();
+
 			PacketProtocolRequestToServer.QuickRequestToServer<ModSettingsProtocol>( -1 );
 		}
 

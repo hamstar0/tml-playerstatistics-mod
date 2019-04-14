@@ -120,7 +120,7 @@ namespace PlayerStatistics.UI {
 
 			this.Recalculate();
 		}
-		
+
 		public void RemovePlayer( int playerWho ) {
 			UIPlayerStatsEntry uiPlrStats = this.ActivePlayerElements.GetOrDefault( playerWho );
 
@@ -130,6 +130,13 @@ namespace PlayerStatistics.UI {
 			}
 
 			this.ActivePlayerElements.Remove( playerWho );
+
+			this.Recalculate();
+		}
+
+		public void ClearPlayers() {
+			this.PlayerStatList.Clear();
+			this.ActivePlayerElements.Clear();
 
 			this.Recalculate();
 		}
