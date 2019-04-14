@@ -11,7 +11,7 @@ using Terraria.UI;
 namespace PlayerStatistics {
 	class UIPlayerStatsTab : UIControlPanelTab {
 		private UIList PlayerStatList;
-		private IDictionary<int, UIPlayerStats> ActivePlayerElements = new Dictionary<int, UIPlayerStats>();
+		private IDictionary<int, UIPlayerStatsEntry> ActivePlayerElements = new Dictionary<int, UIPlayerStatsEntry>();
 
 
 
@@ -60,14 +60,14 @@ namespace PlayerStatistics {
 		////////////////
 
 		public void AddPlayer( Player player ) {
-			var uiPlrStats = new UIPlayerStats( player );
+			var uiPlrStats = new UIPlayerStatsEntry( player );
 
 			this.PlayerStatList.Add( uiPlrStats );
 			this.ActivePlayerElements[player.whoAmI] = uiPlrStats;
 		}
 		
 		public void RemovePlayer( int playerWho ) {
-			UIPlayerStats uiPlrStats = this.ActivePlayerElements.GetOrDefault( playerWho );
+			UIPlayerStatsEntry uiPlrStats = this.ActivePlayerElements.GetOrDefault( playerWho );
 
 			if( uiPlrStats != null ) {
 				this.PlayerStatList.RemoveChild( uiPlrStats );

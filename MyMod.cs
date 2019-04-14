@@ -12,6 +12,10 @@ using Terraria.ModLoader;
 
 namespace PlayerStatistics {
 	class PlayerStatisticsMod : Mod {
+		public const string ControlPanelName = "Player Stats";
+
+		////////////////
+
 		public static PlayerStatisticsMod Instance { get; private set; }
 
 
@@ -35,6 +39,8 @@ namespace PlayerStatistics {
 			);
 		}
 
+		////
+
 		public override void Load() {
 			string depErr = TmlHelpers.ReportBadDependencyMods( this );
 			if( depErr != null ) { throw new HamstarException( depErr ); }
@@ -48,7 +54,7 @@ namespace PlayerStatistics {
 			if( !Main.dedServ ) {
 				// Add player stats tab
 				this.PlayerStatsUI = new UIPlayerStatsTab( UITheme.Vanilla );
-				ControlPanelTabs.AddTab( "Player Stats", this.PlayerStatsUI );
+				ControlPanelTabs.AddTab( PlayerStatisticsMod.ControlPanelName, this.PlayerStatsUI );
 
 				// Register boss kills to indicate progress
 				ExtendedPlayerHooks.AddNpcKillHook( (plr, npc) => {

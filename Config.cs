@@ -19,13 +19,7 @@ namespace PlayerStatistics {
 		private void SetDefaults() { }
 
 		////////////////
-
-		public void ReadyingForLocalPlayerUse() {
-		}
-
-
-		////////////////
-
+		
 		public bool CanUpdateVersion() {
 			if( this.VersionSinceUpdate == "" ) { return true; }
 			var versSince = new Version( this.VersionSinceUpdate );

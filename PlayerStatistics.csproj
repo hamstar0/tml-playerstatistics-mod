@@ -41,7 +41,8 @@
     <Compile Include="MyPlayer.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="NetProtocols\SyncStatsProtocol.cs" />
-    <Compile Include="UIPlayerStats.cs" />
+    <Compile Include="Logic\PlayerStatsLogic.cs" />
+    <Compile Include="UIPlayerStatsEntry.cs" />
     <Compile Include="UIPlayerStatsTab.cs" />
   </ItemGroup>
   <ItemGroup>

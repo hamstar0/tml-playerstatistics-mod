@@ -7,7 +7,7 @@ using Terraria.GameContent.UI.Elements;
 
 
 namespace PlayerStatistics {
-	class UIPlayerStats : UIPanel {
+	class UIPlayerStatsEntry : UIPanel {
 		private int PlayerWho;
 
 		public UIText NameElement;
@@ -22,7 +22,7 @@ namespace PlayerStatistics {
 
 		////////////////
 
-		public UIPlayerStats( Player player ) {
+		public UIPlayerStatsEntry( Player player ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( player );
 			float left = 0;
 

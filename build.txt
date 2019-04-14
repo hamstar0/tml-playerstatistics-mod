@@ -1,5 +1,5 @@
 author = hamstar
-version = 0.3.0
+version = 0.4.0
 displayName = Player Statistics
 modReferences = HamstarHelpers@4.3.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*

@@ -3,10 +3,11 @@ using HamstarHelpers.Helpers.TmlHelpers;
 using System;
 using Terraria;
 
+
 namespace PlayerStatistics.NetProtocols {
 	class SyncStatsProtocol : PacketProtocolSentToEither {
-		public static void SendToAll( Player player ) {
-			var protocol = new SyncStatsProtocol( player );
+		public static void SendToAll( Player killer ) {
+			var protocol = new SyncStatsProtocol( killer );
 			protocol.SendToServer( true );
 		}
 
@@ -17,20 +18,20 @@ namespace PlayerStatistics.NetProtocols {
 		public int PvPKills;
 		public int PvPDeaths;
 		public int TotalDeaths;
-		public int Latency;
 		public string Progress;
 
 
 
 		////////////////
 
-		public SyncStatsProtocol( Player player ) {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( player );
+		private SyncStatsProtocol() { }
 
-			this.PvPDeaths = myplayer.PvPDeaths;
-			this.PvPKills = myplayer.PvPKills;
-			this.TotalDeaths = myplayer.TotalDeaths;
-			this.Latency = myplayer.Latency;
+		private SyncStatsProtocol( Player player ) {
+			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( player );
+			
+			this.PvPDeaths = myplayer.GetPvPDeaths();
+			this.PvPKills = myplayer.GetPvPKills();
+			this.TotalDeaths = myplayer.GetTotalDeaths();
 			this.Progress = myplayer.FormatVanillaProgress();
 		}
 
@@ -40,13 +41,13 @@ namespace PlayerStatistics.NetProtocols {
 		protected override void ReceiveOnClient() {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.LocalPlayer );
 
-			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Latency, this.Progress );
+			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.player[fromWho] );
 
-			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Latency, this.Progress );
+			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress );
 		}
 	}
 }
