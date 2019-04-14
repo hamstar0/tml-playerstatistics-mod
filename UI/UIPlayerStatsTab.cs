@@ -115,7 +115,7 @@ namespace PlayerStatistics.UI {
 		public void AddPlayer( Player player ) {
 			var uiPlrStats = new UIPlayerStatsEntry( player );
 
-			this.PlayerStatList.Append( uiPlrStats );
+			this.PlayerStatList?.Append( uiPlrStats );
 			this.ActivePlayerElements[player.whoAmI] = uiPlrStats;
 
 			this.Recalculate();
@@ -125,7 +125,7 @@ namespace PlayerStatistics.UI {
 			UIPlayerStatsEntry uiPlrStats = this.ActivePlayerElements.GetOrDefault( playerWho );
 
 			if( uiPlrStats != null ) {
-				this.PlayerStatList.RemoveChild( uiPlrStats );
+				this.PlayerStatList?.RemoveChild( uiPlrStats );
 				uiPlrStats.Remove();
 			}
 
@@ -135,7 +135,7 @@ namespace PlayerStatistics.UI {
 		}
 
 		public void ClearPlayers() {
-			this.PlayerStatList.Clear();
+			this.PlayerStatList?.Clear();
 			this.ActivePlayerElements.Clear();
 
 			this.Recalculate();

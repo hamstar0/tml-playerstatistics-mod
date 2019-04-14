@@ -28,11 +28,15 @@ namespace PlayerStatistics {
 
 		public UIPlayerStatsTab PlayerStatsUI;
 
+		public ModHotKey ControlPanelHotkey;
+
 
 
 		////////////////
 
 		public PlayerStatisticsMod() {
+			PlayerStatisticsMod.Instance = this;
+
 			this.ConfigJson = new JsonConfig<PlayerStatisticsConfigData>(
 				PlayerStatisticsConfigData.ConfigFileName,
 				ConfigurationDataBase.RelativePath,
@@ -46,9 +50,9 @@ namespace PlayerStatistics {
 			string depErr = TmlHelpers.ReportBadDependencyMods( this );
 			if( depErr != null ) { throw new HamstarException( depErr ); }
 
-			PlayerStatisticsMod.Instance = this;
-
 			this.LoadConfig();
+
+			this.ControlPanelHotkey = this.RegisterHotKey( "Toggle Player Statistics", "OemTilde" );
 		}
 		
 		public override void PostSetupContent() {
