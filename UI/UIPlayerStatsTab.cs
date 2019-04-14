@@ -11,6 +11,7 @@ using Terraria.UI;
 namespace PlayerStatistics.UI {
 	class UIPlayerStatsTab : UIControlPanelTab {
 		private UIList PlayerStatList;
+
 		private IDictionary<int, UIPlayerStatsEntry> ActivePlayerElements = new Dictionary<int, UIPlayerStatsEntry>();
 
 
@@ -28,13 +29,65 @@ namespace PlayerStatistics.UI {
 		////////////////
 
 		public override void OnInitializeMe() {
+			int leftIdx = 0;
+			float leftX = 16f + UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var nameLabel = new UIText( "Name", 0.7f );
+			nameLabel.Top.Set( 0f, 0f );
+			nameLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)nameLabel );
+			
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var teamLabel = new UIText( "Team", 0.7f );
+			teamLabel.Top.Set( 0f, 0f );
+			teamLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)teamLabel );
+			
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var pvpKillsLabel = new UIText( "PvP Kills", 0.7f );
+			pvpKillsLabel.Top.Set( 0f, 0f );
+			pvpKillsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)pvpKillsLabel );
+			
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var pvpDeathsLabel = new UIText( "PvP Deaths", 0.7f );
+			pvpDeathsLabel.Top.Set( 0f, 0f );
+			pvpDeathsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)pvpDeathsLabel );
+			
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var totalDeathsLabel = new UIText( "All Deaths", 0.7f );
+			totalDeathsLabel.Top.Set( 0f, 0f );
+			totalDeathsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)totalDeathsLabel );
+			
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var latencyLabel = new UIText( "Latency", 0.7f );
+			latencyLabel.Top.Set( 0f, 0f );
+			latencyLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)latencyLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
+
+			var progressLabel = new UIText( "Progress", 0.7f );
+			progressLabel.Top.Set( 0f, 0f );
+			progressLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)progressLabel );
+
+			////
+
 			var modListPanel = new UIPanel();
-			modListPanel.Top.Set( 0f, 0f );
+			modListPanel.Top.Set( 24f, 0f );
 			modListPanel.Width.Set( 0f, 1f );
-			modListPanel.Height.Set( 300f, 0f );
+			modListPanel.Height.Set( 480f, 0f );
 			modListPanel.HAlign = 0f;
 			modListPanel.SetPadding( 4f );
-			modListPanel.PaddingTop = 0.0f;
+			//modListPanel.PaddingTop = 0.0f;
 			modListPanel.BackgroundColor = this.Theme.ListBgColor;
 			modListPanel.BorderColor = this.Theme.ListEdgeColor;
 			this.Append( (UIElement)modListPanel );
@@ -62,8 +115,10 @@ namespace PlayerStatistics.UI {
 		public void AddPlayer( Player player ) {
 			var uiPlrStats = new UIPlayerStatsEntry( player );
 
-			this.PlayerStatList.Add( uiPlrStats );
+			this.PlayerStatList.Append( uiPlrStats );
 			this.ActivePlayerElements[player.whoAmI] = uiPlrStats;
+
+			this.Recalculate();
 		}
 		
 		public void RemovePlayer( int playerWho ) {
@@ -75,6 +130,8 @@ namespace PlayerStatistics.UI {
 			}
 
 			this.ActivePlayerElements.Remove( playerWho );
+
+			this.Recalculate();
 		}
 
 

@@ -15,7 +15,7 @@ namespace PlayerStatistics.Logic {
 		public int PvPKills;
 		public int PvPDeaths;
 		public int TotalDeaths;
-		public int Latency;
+		public int Latency = 0;
 		public string ProgressOveride;
 
 
@@ -61,7 +61,9 @@ namespace PlayerStatistics.Logic {
 		public void Update() {
 			var mymod = PlayerStatisticsMod.Instance;
 
-			this.Latency = NetHelpers.GetServerPing();
+			if( Main.netMode == 1 ) {
+				this.Latency = NetHelpers.GetServerPing();
+			}
 
 			if( mymod.PlayerStatsUI.IsInitialized && ControlPanelTabs.GetCurrentTab() == PlayerStatisticsMod.ControlPanelName ) {
 				mymod.PlayerStatsUI.Update();
@@ -73,34 +75,34 @@ namespace PlayerStatistics.Logic {
 
 		public string FormatVanillaProgress() {
 			if( this.BossNpcKills.ContainsKey( NPCID.MoonLordCore ) ) {
-				return "Moon Lord Defeated";
+				return "Post-Moon Lord";
 			}
 			/*if( (this.EventsConquered & VanillaEventFlag.Martians) != 0 ) {
 				return "Martian Invasion Defeated";
 			}*/
 			if( this.BossNpcKills.ContainsKey( NPCID.CultistBoss ) ) {
-				return "Lunatic Cultist Defeated";
+				return "Post-Cultist";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.Golem ) ) {
-				return "Golem Defeated";
+				return "Post-Golem";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.Plantera ) ) {
-				return "Plantera Defeated";
+				return "Post-Plantera";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.TheDestroyer )
 				|| this.BossNpcKills.ContainsKey( NPCID.SkeletronPrime )
 				|| ( this.BossNpcKills.ContainsKey( NPCID.Retinazer ) && this.BossNpcKills.ContainsKey( NPCID.Spazmatism ) ) ) {
-				return "Mech Bosses Defeated";
+				return "Post-Mech Bosses";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.WallofFlesh ) ) {
-				return "Hard Mode Attained";
+				return "Hard Mode";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.EaterofWorldsHead )
 				|| this.BossNpcKills.ContainsKey( NPCID.BrainofCthulhu ) ) {
-				return "Evil Biome Conquered";
+				return "Post-Evil Biome";
 			}
 			if( this.BossNpcKills.ContainsKey( NPCID.SkeletronHead ) ) {
-				return "Dungeon Accessed";
+				return "Dungeon Open";
 			}
 			/*if( (this.EventsConquered & VanillaEventFlag.Goblins) != 0 ) {
 				return "Goblins Defeated";
@@ -108,7 +110,7 @@ namespace PlayerStatistics.Logic {
 			if( this.BossNpcKills.ContainsKey( NPCID.KingSlime )
 				|| this.BossNpcKills.ContainsKey( NPCID.EyeofCthulhu )
 				|| this.BossNpcKills.ContainsKey( NPCID.QueenBee ) ) {
-				return "Boss Kills Begun";
+				return "Bosses Killed";
 			}
 			return "None";
 		}

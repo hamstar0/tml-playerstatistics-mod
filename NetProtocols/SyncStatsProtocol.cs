@@ -32,7 +32,7 @@ namespace PlayerStatistics.NetProtocols {
 			this.PvPDeaths = myplayer.GetPvPDeaths();
 			this.PvPKills = myplayer.GetPvPKills();
 			this.TotalDeaths = myplayer.GetTotalDeaths();
-			this.Progress = myplayer.FormatVanillaProgress();
+			this.Progress = myplayer.GetProgress();
 		}
 
 
