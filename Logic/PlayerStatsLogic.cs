@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
 
 namespace PlayerStatistics.Logic {
@@ -21,11 +22,37 @@ namespace PlayerStatistics.Logic {
 
 		////////////////
 
+		public PlayerStatsLogic() { }
+
 		public void SetStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress ) {
 			this.PvPKills = pvpKills;
 			this.PvPDeaths = pvpDeaths;
 			this.TotalDeaths = totalDeaths;
 			this.ProgressOveride = progress;
+		}
+
+		////////////////
+
+		public void Load( TagCompound tag ) {
+			if( tag.ContainsKey("pvp_kills") ) {
+				this.PvPKills = tag.GetInt( "pvp_kills" );
+				this.PvPDeaths = tag.GetInt( "pvp_deaths" );
+				this.TotalDeaths = tag.GetInt( "total_deaths" );
+			}
+		}
+
+		public TagCompound Save() {
+			var mymod = PlayerStatisticsMod.Instance;
+
+			if( mymod.Config.SaveStatsPerPlayer ) {
+				return new TagCompound {
+					{ "pvp_kills", this.PvPKills },
+					{ "pvp_deaths", this.PvPDeaths },
+					{ "total_deaths", this.TotalDeaths }
+				};
+			} else {
+				return new TagCompound();
+			}
 		}
 
 

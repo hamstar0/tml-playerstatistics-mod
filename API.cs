@@ -2,6 +2,9 @@
 
 
 namespace PlayerStatistics {
-	class PlayerStatisticsAPI {
+	public static class PlayerStatisticsAPI {
+		public static PlayerStatisticsConfigData GetModSettings() {
+			return PlayerStatisticsMod.Instance.Config;
+		}
 	}
 }

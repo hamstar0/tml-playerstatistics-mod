@@ -12,6 +12,8 @@ namespace PlayerStatistics {
 
 		public string VersionSinceUpdate = "";
 
+		public bool SaveStatsPerPlayer = false;
+
 
 
 		////////////////
