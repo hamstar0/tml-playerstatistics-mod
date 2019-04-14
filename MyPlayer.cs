@@ -1,6 +1,5 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.NetHelpers;
-using HamstarHelpers.Services.ControlPanel;
+﻿using HamstarHelpers.Components.DataStructures;
+using HamstarHelpers.Helpers.DebugHelpers;
 using PlayerStatistics.Logic;
 using PlayerStatistics.NetProtocols;
 using System;
@@ -22,11 +21,7 @@ namespace PlayerStatistics {
 
 			var mymod = (PlayerStatisticsMod)this.mod;
 
-			this.Logic.Latency = NetHelpers.GetServerPing();
-
-			if( mymod.PlayerStatsUI.IsInitialized && ControlPanelTabs.GetCurrentTab() == PlayerStatisticsMod.ControlPanelName ) {
-				mymod.PlayerStatsUI.Update();
-			}
+			this.Logic.Update();
 		}
 
 
@@ -78,11 +73,28 @@ namespace PlayerStatistics {
 		public string GetProgressOverride() {
 			return this.Logic.ProgressOveride;
 		}
+		public int GetLatency() {
+			return this.Logic.Latency;
+		}
+		public string GetProgress() {
+			if( this.player.whoAmI != Main.myPlayer && !string.IsNullOrEmpty(this.Logic.ProgressOveride) ) {
+				return this.Logic.ProgressOveride;
+			}
+			return this.Logic.FormatVanillaProgress();
+		}
 
 		////
 
 		internal void SyncStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress ) {
 			this.Logic.SetStats( pvpKills, pvpDeaths, totalDeaths, progress );
+		}
+
+		////
+
+		internal void RegisterNpcKillIfBoss( NPC npc ) {
+			if( npc.boss ) {
+				this.Logic.BossNpcKills.AddOrSet( npc.netID, 1 );
+			}
 		}
 	}
 }

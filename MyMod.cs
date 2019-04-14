@@ -6,6 +6,7 @@ using HamstarHelpers.Helpers.TmlHelpers;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
 using HamstarHelpers.Services.ControlPanel;
 using HamstarHelpers.Services.ExtendedHooks;
+using PlayerStatistics.UI;
 using Terraria;
 using Terraria.ModLoader;
 

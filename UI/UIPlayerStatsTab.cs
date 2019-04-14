@@ -8,7 +8,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
 
-namespace PlayerStatistics {
+namespace PlayerStatistics.UI {
 	class UIPlayerStatsTab : UIControlPanelTab {
 		private UIList PlayerStatList;
 		private IDictionary<int, UIPlayerStatsEntry> ActivePlayerElements = new Dictionary<int, UIPlayerStatsEntry>();

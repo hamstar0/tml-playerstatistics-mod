@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 
 
-namespace PlayerStatistics {
+namespace PlayerStatistics.UI {
 	class UIPlayerStatsEntry : UIPanel {
 		private int PlayerWho;
 
@@ -46,28 +46,28 @@ namespace PlayerStatistics {
 
 			left += 64;
 
-			this.PvPKillsElement = new UIText( myplayer.PvPKills+"" );
+			this.PvPKillsElement = new UIText( myplayer.GetPvPKills() + "" );
 			this.PvPKillsElement.Top.Set( 0f, 0f );
 			this.PvPKillsElement.Left.Set( left, 0f );
 			this.Append( this.PvPKillsElement );
 
 			left += 48;
 
-			this.PvPDeathsElement = new UIText( myplayer.PvPDeaths + "" );
+			this.PvPDeathsElement = new UIText( myplayer.GetPvPDeaths() + "" );
 			this.PvPDeathsElement.Top.Set( 0f, 0f );
 			this.PvPDeathsElement.Left.Set( left, 0f );
 			this.Append( this.PvPDeathsElement );
 
 			left += 48;
 
-			this.TotalDeathsElement = new UIText( myplayer.TotalDeaths + "" );
+			this.TotalDeathsElement = new UIText( myplayer.GetTotalDeaths() + "" );
 			this.TotalDeathsElement.Top.Set( 0f, 0f );
 			this.TotalDeathsElement.Left.Set( left, 0f );
 			this.Append( this.TotalDeathsElement );
 
 			left += 48;
 
-			this.LatencyElement = new UIText( myplayer.Latency + "" );
+			this.LatencyElement = new UIText( myplayer.GetLatency() + "" );
 			this.LatencyElement.Top.Set( 0f, 0f );
 			this.LatencyElement.Left.Set( left, 0f );
 			this.Append( this.LatencyElement );
@@ -93,11 +93,11 @@ namespace PlayerStatistics {
 			this.TeamElement.SetText( teamColorName );
 			this.TeamElement.TextColor = teamColor;
 
-			this.PvPKillsElement.SetText( myplayer.PvPKills + "" );
-			this.PvPDeathsElement.SetText( myplayer.PvPDeaths + "" );
-			this.TotalDeathsElement.SetText( myplayer.TotalDeaths + "" );
-			this.LatencyElement.SetText( myplayer.Latency + "" );
-			this.ProgressElement.SetText( myplayer.FormatVanillaProgress() );
+			this.PvPKillsElement.SetText( myplayer.GetPvPKills() + "" );
+			this.PvPDeathsElement.SetText( myplayer.GetPvPDeaths() + "" );
+			this.TotalDeathsElement.SetText( myplayer.GetTotalDeaths() + "" );
+			this.LatencyElement.SetText( myplayer.GetLatency() + "" );
+			this.ProgressElement.SetText( myplayer.GetProgress() );
 		}
 	}
 }
