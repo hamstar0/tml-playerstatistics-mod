@@ -37,6 +37,7 @@
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="MyMod.cs" />
+    <Compile Include="MyPlayer_Stats.cs" />
     <Compile Include="MyPlayer.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="NetProtocols\SyncStatsProtocol.cs" />
