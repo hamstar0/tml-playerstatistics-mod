@@ -1,5 +1,6 @@
 ﻿using HamstarHelpers.Components.DataStructures;
 using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.TmlHelpers;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -32,7 +33,16 @@ namespace PlayerStatistics {
 
 		////
 
-		internal void SyncStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress, int progressAmount ) {
+		internal void SyncStats( int killerWho, int pvpKills, int pvpDeaths, int totalDeaths, string progress, int progressAmount ) {
+			if( killerWho >= 0 && killerWho < Main.player.Length ) {
+				var otherPlayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.player[killerWho] );
+				if( otherPlayer != null ) {
+					var logic = otherPlayer.Logic;
+
+					otherPlayer.Logic.SetStats( logic.PvPKills + 1, logic.PvPDeaths, logic.TotalDeaths, logic.ProgressOverride, logic.ProgressOverrideAmount );
+				}
+			}
+
 			this.Logic.SetStats( pvpKills, pvpDeaths, totalDeaths, progress, progressAmount );
 		}
 

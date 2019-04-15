@@ -47,27 +47,7 @@ namespace PlayerStatistics {
 			this.Logic.TotalDeaths++;
 
 			if( Main.netMode == 1 && this.player.whoAmI == Main.myPlayer ) {
-				SyncStatsProtocol.SendToAll( this.player );
-			}
-		}
-
-		public override void OnHitPvp( Item item, Player target, int damage, bool crit ) {
-			if( target.dead ) {
-				this.Logic.PvPKills++;
-			}
-
-			if( Main.netMode == 1 && this.player.whoAmI == Main.myPlayer ) {
-				SyncStatsProtocol.SendToAll( this.player );
-			}
-		}
-
-		public override void OnHitPvpWithProj( Projectile proj, Player target, int damage, bool crit ) {
-			if( target.dead ) {
-				this.Logic.PvPKills++;
-			}
-
-			if( Main.netMode == 1 && this.player.whoAmI == Main.myPlayer ) {
-				SyncStatsProtocol.SendToAll( this.player );
+				SyncStatsProtocol.SendToAll( this.player, damageSource.SourcePlayerIndex );
 			}
 		}
 
