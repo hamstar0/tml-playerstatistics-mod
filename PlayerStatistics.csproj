@@ -44,6 +44,7 @@
     <Compile Include="NetProtocols\SyncStatsProtocol.cs" />
     <Compile Include="Logic\PlayerStatsLogic.cs" />
     <Compile Include="UI\UIPlayerStatsEntry.cs" />
+    <Compile Include="UI\UIHideableScrollbar.cs" />
     <Compile Include="UI\UIPlayerStatsTab.cs" />
   </ItemGroup>
   <ItemGroup>

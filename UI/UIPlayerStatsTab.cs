@@ -1,6 +1,7 @@
 ﻿using HamstarHelpers.Components.DataStructures;
 using HamstarHelpers.Components.UI;
 using HamstarHelpers.Internals.ControlPanel;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -13,6 +14,11 @@ namespace PlayerStatistics.UI {
 		private UIList PlayerStatList;
 
 		private IDictionary<int, UIPlayerStatsEntry> ActivePlayerElements = new Dictionary<int, UIPlayerStatsEntry>();
+
+
+		////////////////
+
+		public int PlayerCount => this.ActivePlayerElements.Count;
 
 
 
@@ -29,55 +35,7 @@ namespace PlayerStatistics.UI {
 		////////////////
 
 		public override void OnInitializeMe() {
-			int leftIdx = 0;
-			float leftX = 16f + UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var nameLabel = new UIText( "Name", 0.7f );
-			nameLabel.Top.Set( 0f, 0f );
-			nameLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)nameLabel );
-			
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var teamLabel = new UIText( "Team", 0.7f );
-			teamLabel.Top.Set( 0f, 0f );
-			teamLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)teamLabel );
-			
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var pvpKillsLabel = new UIText( "PvP Kills", 0.7f );
-			pvpKillsLabel.Top.Set( 0f, 0f );
-			pvpKillsLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)pvpKillsLabel );
-			
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var pvpDeathsLabel = new UIText( "PvP Deaths", 0.7f );
-			pvpDeathsLabel.Top.Set( 0f, 0f );
-			pvpDeathsLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)pvpDeathsLabel );
-			
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var totalDeathsLabel = new UIText( "All Deaths", 0.7f );
-			totalDeathsLabel.Top.Set( 0f, 0f );
-			totalDeathsLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)totalDeathsLabel );
-			
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var latencyLabel = new UIText( "Latency", 0.7f );
-			latencyLabel.Top.Set( 0f, 0f );
-			latencyLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)latencyLabel );
-
-			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			var progressLabel = new UIText( "Progress", 0.7f );
-			progressLabel.Top.Set( 0f, 0f );
-			progressLabel.Left.Set( leftX, 0f );
-			this.Append( (UIElement)progressLabel );
+			this.InitializeHeader();
 
 			////
 
@@ -100,13 +58,66 @@ namespace PlayerStatistics.UI {
 			this.PlayerStatList.SetPadding( 0f );
 			modListPanel.Append( (UIElement)this.PlayerStatList );
 
-			UIScrollbar scrollbar = new UIScrollbar();
+			var scrollbar = new UIHideableScrollbar();
 			scrollbar.Top.Set( 8f, 0f );
 			scrollbar.Height.Set( -16f, 1f );
 			scrollbar.SetView( 100f, 1000f );
 			scrollbar.HAlign = 1f;
 			modListPanel.Append( (UIElement)scrollbar );
 			this.PlayerStatList.SetScrollbar( scrollbar );
+		}
+
+
+		private void InitializeHeader() {
+			int leftIdx = 0;
+			float leftX = 16f + UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var nameLabel = new UIText( "Name", 0.7f );
+			nameLabel.Top.Set( 0f, 0f );
+			nameLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)nameLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var teamLabel = new UIText( "Team", 0.7f );
+			teamLabel.Top.Set( 0f, 0f );
+			teamLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)teamLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var pvpKillsLabel = new UIText( "PvP Kills", 0.7f );
+			pvpKillsLabel.Top.Set( 0f, 0f );
+			pvpKillsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)pvpKillsLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var pvpDeathsLabel = new UIText( "PvP Deaths", 0.7f );
+			pvpDeathsLabel.Top.Set( 0f, 0f );
+			pvpDeathsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)pvpDeathsLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var totalDeathsLabel = new UIText( "All Deaths", 0.7f );
+			totalDeathsLabel.Top.Set( 0f, 0f );
+			totalDeathsLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)totalDeathsLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var latencyLabel = new UIText( "Latency", 0.7f );
+			latencyLabel.Top.Set( 0f, 0f );
+			latencyLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)latencyLabel );
+
+			leftX += UIPlayerStatsEntry.ColumnOffsets[leftIdx++];
+
+			var progressLabel = new UIText( "Progress", 0.7f );
+			progressLabel.Top.Set( 0f, 0f );
+			progressLabel.Left.Set( leftX, 0f );
+			this.Append( (UIElement)progressLabel );
 		}
 
 
@@ -146,6 +157,27 @@ namespace PlayerStatistics.UI {
 			this.ActivePlayerElements.Clear();
 
 			this.Recalculate();
+		}
+
+
+		////////////////
+
+		public override void Draw( SpriteBatch spriteBatch ) {
+			bool listChanged;
+
+			if( UIHideableScrollbar.IsScrollbarHidden(this.PlayerCount, this.PlayerStatList) ) {
+				listChanged = this.PlayerStatList.Width.Pixels == 0;
+				this.PlayerStatList.Width.Pixels = 0;
+			} else {
+				listChanged = this.PlayerStatList.Width.Pixels == -25;
+				this.PlayerStatList.Width.Pixels = -25;
+			}
+
+			if( listChanged ) {
+				this.Recalculate();
+			}
+
+			base.Draw( spriteBatch );
 		}
 
 

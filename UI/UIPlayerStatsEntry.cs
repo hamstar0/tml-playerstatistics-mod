@@ -2,6 +2,7 @@
 using HamstarHelpers.Helpers.PlayerHelpers;
 using HamstarHelpers.Helpers.TmlHelpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -9,14 +10,15 @@ using Terraria.GameContent.UI.Elements;
 
 namespace PlayerStatistics.UI {
 	class UIPlayerStatsEntry : UIPanel {
+		public static float DefaultHeight => 32f;
 		public static float[] ColumnOffsets => new float[] {
-			0,		//Name
-			116,	//Team
-			64,		//PvP Kills
-			56,		//PvP Deaths
-			68,		//All Deaths
-			64,		//Latency
-			48		//Progress
+			0f,		//Name
+			116f,	//Team
+			64f,	//PvP Kills
+			56f,	//PvP Deaths
+			68f,	//All Deaths
+			64f,	//Latency
+			48f		//Progress
 		};
 
 
@@ -50,7 +52,7 @@ namespace PlayerStatistics.UI {
 			float leftX = UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
 
 			this.Width.Set( 0f, 1f );
-			this.Height.Set( 32f, 0f );
+			this.Height.Set( UIPlayerStatsEntry.DefaultHeight, 0f );
 
 			this.PlayerWho = player.whoAmI;
 
