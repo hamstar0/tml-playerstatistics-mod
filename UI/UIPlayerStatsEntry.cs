@@ -33,6 +33,14 @@ namespace PlayerStatistics.UI {
 		public UIText LatencyElement;
 		public UIText ProgressElement;
 
+		private string PlayerName;
+		private string TeamName;
+		private int PvpKills;
+		private int PvpDeaths;
+		private int TotalDeaths;
+		private int Latency;
+		private int ProgressAmount;
+		
 
 
 		////////////////
@@ -95,11 +103,29 @@ namespace PlayerStatistics.UI {
 			this.Append( this.LatencyElement );
 			
 			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
-
-			this.ProgressElement = new UIText( myplayer.GetProgress(), 0.7f );
+			
+			this.ProgressElement = new UIText( myplayer.GetProgress(out this.ProgressAmount), 0.7f );
 			this.ProgressElement.Top.Set( 0f, 0f );
 			this.ProgressElement.Left.Set( leftX, 0f );
 			this.Append( this.ProgressElement );
+		}
+
+
+		////////////////
+
+		public override int CompareTo( object obj ) {
+			var other = obj as UIPlayerStatsEntry;
+			if( other == null ) {
+				return -1;
+			}
+
+			if( this.PvpKills > other.PvpKills ) {
+				return -1;
+			} else if( this.PvpKills < other.PvpKills ) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 
 
@@ -115,11 +141,17 @@ namespace PlayerStatistics.UI {
 			this.TeamElement.SetText( teamColorName );
 			this.TeamElement.TextColor = teamColor;
 
-			this.PvPKillsElement.SetText( myplayer.GetPvPKills() + "" );
-			this.PvPDeathsElement.SetText( myplayer.GetPvPDeaths() + "" );
-			this.TotalDeathsElement.SetText( myplayer.GetTotalDeaths() + "" );
-			this.LatencyElement.SetText( myplayer.GetLatency() + "" );
-			this.ProgressElement.SetText( myplayer.GetProgress() );
+			this.PvpKills = myplayer.GetPvPKills();
+			this.PvpDeaths = myplayer.GetPvPDeaths();
+			this.TotalDeaths = myplayer.GetTotalDeaths();
+			this.Latency = myplayer.GetLatency();
+			string progress = myplayer.GetProgress( out this.ProgressAmount );
+
+			this.PvPKillsElement.SetText( this.PvpKills + "" );
+			this.PvPDeathsElement.SetText( this.PvpDeaths + "" );
+			this.TotalDeathsElement.SetText( this.TotalDeaths + "" );
+			this.LatencyElement.SetText( this.Latency + "" );
+			this.ProgressElement.SetText( progress );
 		}
 	}
 }

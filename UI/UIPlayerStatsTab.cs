@@ -112,13 +112,19 @@ namespace PlayerStatistics.UI {
 
 		////////////////
 
-		public void AddPlayer( Player player ) {
+		public bool AddPlayer( Player player ) {
+			if( this.PlayerStatList == null ) {
+				return false;
+			}
+
 			var uiPlrStats = new UIPlayerStatsEntry( player );
 
-			this.PlayerStatList?.Append( uiPlrStats );
-			this.ActivePlayerElements[player.whoAmI] = uiPlrStats;
+			this.PlayerStatList?.Add( uiPlrStats );
+			this.PlayerStatList?.UpdateOrder();
+			this.ActivePlayerElements[ player.whoAmI ] = uiPlrStats;
 
 			this.Recalculate();
+			return true;
 		}
 
 		public void RemovePlayer( int playerWho ) {
@@ -127,6 +133,7 @@ namespace PlayerStatistics.UI {
 			if( uiPlrStats != null ) {
 				this.PlayerStatList?.RemoveChild( uiPlrStats );
 				uiPlrStats.Remove();
+				this.PlayerStatList?.UpdateOrder();
 			}
 
 			this.ActivePlayerElements.Remove( playerWho );
@@ -155,7 +162,7 @@ namespace PlayerStatistics.UI {
 						this.RemovePlayer( i );
 					}
 				} else {
-					if( !this.ActivePlayerElements.ContainsKey( i ) ) {
+					if( !this.ActivePlayerElements.ContainsKey(i) ) {
 						this.AddPlayer( plr );
 					} else {
 						this.ActivePlayerElements[i].UpdatePlayerInfo();

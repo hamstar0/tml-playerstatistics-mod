@@ -19,6 +19,7 @@ namespace PlayerStatistics.NetProtocols {
 		public int PvPDeaths;
 		public int TotalDeaths;
 		public string Progress;
+		public int ProgressAmount;
 
 
 
@@ -32,7 +33,7 @@ namespace PlayerStatistics.NetProtocols {
 			this.PvPDeaths = myplayer.GetPvPDeaths();
 			this.PvPKills = myplayer.GetPvPKills();
 			this.TotalDeaths = myplayer.GetTotalDeaths();
-			this.Progress = myplayer.GetProgress();
+			this.Progress = myplayer.GetProgress( out this.ProgressAmount );
 		}
 
 
@@ -41,13 +42,13 @@ namespace PlayerStatistics.NetProtocols {
 		protected override void ReceiveOnClient() {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.LocalPlayer );
 
-			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress );
+			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress, this.ProgressAmount );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.player[fromWho] );
 
-			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress );
+			myplayer.SyncStats( this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress, this.ProgressAmount );
 		}
 	}
 }

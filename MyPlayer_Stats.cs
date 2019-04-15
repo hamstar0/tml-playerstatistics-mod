@@ -17,22 +17,23 @@ namespace PlayerStatistics {
 			return this.Logic.TotalDeaths;
 		}
 		public string GetProgressOverride() {
-			return this.Logic.ProgressOveride;
+			return this.Logic.ProgressOverride;
 		}
 		public int GetLatency() {
 			return this.Logic.Latency;
 		}
-		public string GetProgress() {
-			if( this.player.whoAmI != Main.myPlayer && !string.IsNullOrEmpty(this.Logic.ProgressOveride) ) {
-				return this.Logic.ProgressOveride;
+		public string GetProgress( out int progressAmount ) {
+			if( this.player.whoAmI != Main.myPlayer && !string.IsNullOrEmpty(this.Logic.ProgressOverride) ) {
+				progressAmount = this.Logic.ProgressOverrideAmount;
+				return this.Logic.ProgressOverride;
 			}
-			return this.Logic.FormatVanillaProgress();
+			return this.Logic.FormatVanillaProgress( out progressAmount );
 		}
 
 		////
 
-		internal void SyncStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress ) {
-			this.Logic.SetStats( pvpKills, pvpDeaths, totalDeaths, progress );
+		internal void SyncStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress, int progressAmount ) {
+			this.Logic.SetStats( pvpKills, pvpDeaths, totalDeaths, progress, progressAmount );
 		}
 
 		////
