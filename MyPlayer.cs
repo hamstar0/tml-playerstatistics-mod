@@ -79,7 +79,11 @@ namespace PlayerStatistics {
 
 			try {
 				if( mymod.ControlPanelHotkey != null && mymod.ControlPanelHotkey.JustPressed ) {
-					ControlPanelTabs.OpenTab( PlayerStatisticsMod.ControlPanelName );
+					if( ControlPanelTabs.IsDialogOpen() ) {
+						ControlPanelTabs.CloseDialog();
+					} else {
+						ControlPanelTabs.OpenTab( PlayerStatisticsMod.ControlPanelName );
+					}
 				}
 			} catch { }
 		}
