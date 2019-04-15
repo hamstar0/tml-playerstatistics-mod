@@ -30,8 +30,6 @@ namespace PlayerStatistics {
 		////////////////
 
 		public override void PreUpdate() {
-			if( this.player.whoAmI != Main.myPlayer ) { return; }
-
 			var mymod = (PlayerStatisticsMod)this.mod;
 
 			this.Logic.Update();
@@ -41,12 +39,15 @@ namespace PlayerStatistics {
 		////////////////
 
 		public override void Kill( double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource ) {
+			if( this.player.whoAmI != Main.myPlayer ) { return; }
+
 			if( pvp ) {
-				this.Logic.PvPDeaths++;
+				this.Logic.PvpDeaths++;
 			}
 			this.Logic.TotalDeaths++;
 
 			if( Main.netMode == 1 && this.player.whoAmI == Main.myPlayer ) {
+				PlayerStatisticsPlayer.AddKillForPlayer( damageSource.SourcePlayerIndex );
 				SyncStatsProtocol.SendToAll( this.player, damageSource.SourcePlayerIndex );
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.Helpers.NetHelpers;
+﻿using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.NetHelpers;
 using HamstarHelpers.Services.ControlPanel;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace PlayerStatistics.Logic {
 		public IDictionary<int, int> BossNpcKills = new Dictionary<int, int>();
 		//private VanillaEventFlag EventsConquered;
 
-		public int PvPKills;
-		public int PvPDeaths;
+		public int PvpKills;
+		public int PvpDeaths;
 		public int TotalDeaths;
 		public int Latency = 0;
 		public string ProgressOverride;
@@ -26,19 +27,23 @@ namespace PlayerStatistics.Logic {
 		public PlayerStatsLogic() { }
 
 		public void SetStats( int pvpKills, int pvpDeaths, int totalDeaths, string progress, int progressAmount ) {
-			this.PvPKills = pvpKills;
-			this.PvPDeaths = pvpDeaths;
+			this.PvpKills = pvpKills;
+			this.PvpDeaths = pvpDeaths;
 			this.TotalDeaths = totalDeaths;
 			this.ProgressOverride = progress;
 			this.ProgressOverrideAmount = progressAmount;
+		}
+
+		public void SetPvpKills( int pvpKills ) {
+			this.PvpKills = pvpKills;
 		}
 
 		////////////////
 
 		public void Load( TagCompound tag ) {
 			if( tag.ContainsKey("pvp_kills") ) {
-				this.PvPKills = tag.GetInt( "pvp_kills" );
-				this.PvPDeaths = tag.GetInt( "pvp_deaths" );
+				this.PvpKills = tag.GetInt( "pvp_kills" );
+				this.PvpDeaths = tag.GetInt( "pvp_deaths" );
 				this.TotalDeaths = tag.GetInt( "total_deaths" );
 			}
 
@@ -59,8 +64,8 @@ namespace PlayerStatistics.Logic {
 			var tag = new TagCompound();
 
 			if( mymod.Config.SaveStatsPerPlayer ) {
-				tag["pvp_kills"] = this.PvPKills;
-				tag["pvp_deaths"] = this.PvPDeaths;
+				tag["pvp_kills"] = this.PvpKills;
+				tag["pvp_deaths"] = this.PvpDeaths;
 				tag["total_deaths"] = this.TotalDeaths;
 			}
 
@@ -81,7 +86,7 @@ namespace PlayerStatistics.Logic {
 
 		public void Update() {
 			var mymod = PlayerStatisticsMod.Instance;
-
+			
 			if( Main.netMode == 1 ) {
 				this.Latency = NetHelpers.GetServerPing();
 			}

@@ -154,18 +154,18 @@ namespace PlayerStatistics.UI {
 		public void Update() {
 			var mymod = PlayerStatisticsMod.Instance;
 			
-			for( int i = 0; i < Main.player.Length; i++ ) {
-				Player plr = Main.player[i];
+			for( int playerWho = 0; playerWho < Main.player.Length; playerWho++ ) {
+				Player plr = Main.player[playerWho];
 
 				if( plr == null || !plr.active ) {
-					if( this.ActivePlayerElements.ContainsKey(i) ) {
-						this.RemovePlayer( i );
+					if( this.ActivePlayerElements.ContainsKey(playerWho) ) {
+						this.RemovePlayer( playerWho );
 					}
 				} else {
-					if( !this.ActivePlayerElements.ContainsKey(i) ) {
+					if( !this.ActivePlayerElements.ContainsKey(playerWho) ) {
 						this.AddPlayer( plr );
 					} else {
-						this.ActivePlayerElements[i].UpdatePlayerInfo();
+						this.ActivePlayerElements[ playerWho ].UpdatePlayerInfo();
 					}
 				}
 			}

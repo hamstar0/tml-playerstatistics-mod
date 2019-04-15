@@ -23,7 +23,7 @@ namespace PlayerStatistics.UI {
 
 		////////////////
 
-		private int PlayerWho;
+		private readonly int PlayerWho;
 
 		public UIText NameElement;
 		public UIText TeamElement;
@@ -33,8 +33,6 @@ namespace PlayerStatistics.UI {
 		public UIText LatencyElement;
 		public UIText ProgressElement;
 
-		private string PlayerName;
-		private string TeamName;
 		private int PvpKills;
 		private int PvpDeaths;
 		private int TotalDeaths;
@@ -76,14 +74,14 @@ namespace PlayerStatistics.UI {
 			
 			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
 
-			this.PvPKillsElement = new UIText( myplayer.GetPvPKills() + "", 0.7f );
+			this.PvPKillsElement = new UIText( myplayer.GetPvpKills() + "", 0.7f );
 			this.PvPKillsElement.Top.Set( 0f, 0f );
 			this.PvPKillsElement.Left.Set( leftX, 0f );
 			this.Append( this.PvPKillsElement );
 			
 			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
 
-			this.PvPDeathsElement = new UIText( myplayer.GetPvPDeaths() + "", 0.7f );
+			this.PvPDeathsElement = new UIText( myplayer.GetPvpDeaths() + "", 0.7f );
 			this.PvPDeathsElement.Top.Set( 0f, 0f );
 			this.PvPDeathsElement.Left.Set( leftX, 0f );
 			this.Append( this.PvPDeathsElement );
@@ -141,8 +139,8 @@ namespace PlayerStatistics.UI {
 			this.TeamElement.SetText( teamColorName );
 			this.TeamElement.TextColor = teamColor;
 
-			this.PvpKills = myplayer.GetPvPKills();
-			this.PvpDeaths = myplayer.GetPvPDeaths();
+			this.PvpKills = myplayer.GetPvpKills();
+			this.PvpDeaths = myplayer.GetPvpDeaths();
 			this.TotalDeaths = myplayer.GetTotalDeaths();
 			this.Latency = myplayer.GetLatency();
 			string progress = myplayer.GetProgress( out this.ProgressAmount );
@@ -152,6 +150,8 @@ namespace PlayerStatistics.UI {
 			this.TotalDeathsElement.SetText( this.TotalDeaths + "" );
 			this.LatencyElement.SetText( this.Latency + "" );
 			this.ProgressElement.SetText( progress );
+
+			this.Recalculate();
 		}
 	}
 }
