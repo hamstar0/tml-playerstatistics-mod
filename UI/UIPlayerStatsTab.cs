@@ -1,5 +1,6 @@
 ﻿using HamstarHelpers.Components.DataStructures;
 using HamstarHelpers.Components.UI;
+using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Internals.ControlPanel;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -12,6 +13,7 @@ using Terraria.UI;
 namespace PlayerStatistics.UI {
 	class UIPlayerStatsTab : UIControlPanelTab {
 		private UIList PlayerStatList;
+		private UIHideableScrollbar Scrollbar;
 
 		private IDictionary<int, UIPlayerStatsEntry> ActivePlayerElements = new Dictionary<int, UIPlayerStatsEntry>();
 
@@ -58,13 +60,13 @@ namespace PlayerStatistics.UI {
 			this.PlayerStatList.SetPadding( 0f );
 			modListPanel.Append( (UIElement)this.PlayerStatList );
 
-			var scrollbar = new UIHideableScrollbar();
-			scrollbar.Top.Set( 8f, 0f );
-			scrollbar.Height.Set( -16f, 1f );
-			scrollbar.SetView( 100f, 1000f );
-			scrollbar.HAlign = 1f;
-			modListPanel.Append( (UIElement)scrollbar );
-			this.PlayerStatList.SetScrollbar( scrollbar );
+			this.Scrollbar = new UIHideableScrollbar( this.PlayerStatList, true );
+			this.Scrollbar.Top.Set( 8f, 0f );
+			this.Scrollbar.Height.Set( -16f, 1f );
+			this.Scrollbar.SetView( 100f, 1000f );
+			this.Scrollbar.HAlign = 1f;
+			modListPanel.Append( (UIElement)this.Scrollbar );
+			this.PlayerStatList.SetScrollbar( this.Scrollbar );
 		}
 
 
@@ -165,17 +167,22 @@ namespace PlayerStatistics.UI {
 		public override void Draw( SpriteBatch spriteBatch ) {
 			bool listChanged;
 
-			if( UIHideableScrollbar.IsScrollbarHidden(this.PlayerCount, this.PlayerStatList) ) {
-				listChanged = this.PlayerStatList.Width.Pixels == 0;
-				this.PlayerStatList.Width.Pixels = 0;
-			} else {
-				listChanged = this.PlayerStatList.Width.Pixels == -25;
-				this.PlayerStatList.Width.Pixels = -25;
-			}
+			try {
+				this.Scrollbar.IsHidden = UIHideableScrollbar.IsScrollbarHidden( this.PlayerCount, this.PlayerStatList.Parent );
 
-			if( listChanged ) {
-				this.Recalculate();
-			}
+				if( this.Scrollbar.IsHidden ) {
+					listChanged = this.PlayerStatList.Width.Pixels != 0;
+					this.PlayerStatList.Width.Pixels = 0;
+				} else {
+					listChanged = this.PlayerStatList.Width.Pixels != -25;
+					this.PlayerStatList.Width.Pixels = -25;
+				}
+
+				if( listChanged ) {
+					this.Recalculate();
+					this.PlayerStatList.Recalculate();
+				}
+			} catch { }
 
 			base.Draw( spriteBatch );
 		}
