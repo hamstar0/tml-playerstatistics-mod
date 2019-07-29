@@ -1,8 +1,7 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.PlayerHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Players;
+using HamstarHelpers.Helpers.TModLoader;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -66,7 +65,7 @@ namespace PlayerStatistics.UI {
 			leftX += UIPlayerStatsEntry.ColumnOffsets[ leftIdx++ ];
 
 			Color teamColor;
-			string teamColorName = Enum.GetName( typeof(PlayerTeamName), PlayerHelpers.GetTeamName(player.team, out teamColor) );
+			string teamColorName = Enum.GetName( typeof(PlayerTeamName), PlayerTeamHelpers.GetTeamName(player.team, out teamColor) );
 
 			this.TeamElement = new UIText( teamColorName, 0.7f );
 			this.TeamElement.TextColor = teamColor;
@@ -136,7 +135,7 @@ namespace PlayerStatistics.UI {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( plr );
 
 			Color teamColor;
-			string teamColorName = Enum.GetName( typeof(PlayerTeamName), PlayerHelpers.GetTeamName(plr.team, out teamColor) );
+			string teamColorName = Enum.GetName( typeof(PlayerTeamName), PlayerTeamHelpers.GetTeamName(plr.team, out teamColor) );
 
 			this.TeamElement.SetText( teamColorName );
 			this.TeamElement.TextColor = teamColor;

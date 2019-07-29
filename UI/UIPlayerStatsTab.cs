@@ -1,6 +1,6 @@
-﻿using HamstarHelpers.Components.DataStructures;
-using HamstarHelpers.Components.UI;
-using HamstarHelpers.Helpers.DebugHelpers;
+﻿using HamstarHelpers.Components.UI;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.DotNET.Extensions;
 using HamstarHelpers.Internals.ControlPanel;
 using Microsoft.Xna.Framework.Graphics;
 using System;

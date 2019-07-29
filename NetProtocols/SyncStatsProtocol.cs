@@ -1,7 +1,6 @@
 ﻿using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Components.Network;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+using HamstarHelpers.Components.Protocols.Packet.Interfaces;
+using HamstarHelpers.Helpers.TModLoader;
 using System;
 using Terraria;
 
@@ -49,16 +48,16 @@ namespace PlayerStatistics.NetProtocols {
 
 		protected override void ReceiveOnClient() {
 			if( this.ForWho < 0 || this.ForWho >= Main.player.Length ) {
-				throw new HamstarException( "Invalid ForWho: " + this.ForWho );
+				throw new ModHelpersException( "Invalid ForWho: " + this.ForWho );
 			}
 			Player forPlayer = Main.player[ this.ForWho ];
 			if( forPlayer == null ) {
-				throw new HamstarException( "Invalid ForWho player: " + this.ForWho );
+				throw new ModHelpersException( "Invalid ForWho player: " + this.ForWho );
 			}
 
 			var forMyPlayer = TmlHelpers.SafelyGetModPlayer<PlayerStatisticsPlayer>( Main.player[this.ForWho] );
 			if( forMyPlayer == null ) {
-				throw new HamstarException( "Invalid mod player " + forPlayer.name );
+				throw new ModHelpersException( "Invalid mod player " + forPlayer.name );
 			}
 
 			forMyPlayer.SetStats( this.KillerWho, this.PvPKills, this.PvPDeaths, this.TotalDeaths, this.Progress, this.ProgressAmount );

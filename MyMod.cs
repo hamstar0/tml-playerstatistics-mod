@@ -1,11 +1,8 @@
-using HamstarHelpers.Components.Config;
-using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Components.UI;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
-using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
-using HamstarHelpers.Services.ControlPanel;
-using HamstarHelpers.Services.ExtendedHooks;
+using HamstarHelpers.Helpers.TModLoader;
+using HamstarHelpers.Helpers.TModLoader.Mods;
+using HamstarHelpers.Services.Hooks.ExtendedHooks;
+using HamstarHelpers.Services.UI.ControlPanel;
 using PlayerStatistics.UI;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,6 +12,10 @@ namespace PlayerStatistics {
 	class PlayerStatisticsMod : Mod {
 		public const string ControlPanelName = "Player Stats";
 
+		public static string GithubUserName => "hamstar0";
+		public static string GithubProjectName => "tml-playerstatistics-mod";
+
+
 		////////////////
 
 		public static PlayerStatisticsMod Instance { get; private set; }
@@ -23,8 +24,7 @@ namespace PlayerStatistics {
 
 		////////////////
 
-		public JsonConfig<PlayerStatisticsConfigData> ConfigJson { get; private set; }
-		public PlayerStatisticsConfigData Config => this.ConfigJson.Data;
+		public PlayerStatisticsConfig Config => this.GetConfig<PlayerStatisticsConfig>();
 
 		public UIPlayerStatsTab PlayerStatsUI;
 
@@ -36,22 +36,11 @@ namespace PlayerStatistics {
 
 		public PlayerStatisticsMod() {
 			PlayerStatisticsMod.Instance = this;
-
-			this.ConfigJson = new JsonConfig<PlayerStatisticsConfigData>(
-				PlayerStatisticsConfigData.ConfigFileName,
-				ConfigurationDataBase.RelativePath,
-				new PlayerStatisticsConfigData()
-			);
 		}
 
 		////
 
 		public override void Load() {
-			string depErr = TmlHelpers.ReportBadDependencyMods( this );
-			if( depErr != null ) { throw new HamstarException( depErr ); }
-
-			this.LoadConfig();
-
 			this.ControlPanelHotkey = this.RegisterHotKey( "Toggle Player Statistics", "OemTilde" );
 		}
 		
@@ -69,21 +58,6 @@ namespace PlayerStatistics {
 			}
 		}
 
-
-		////
-
-		private void LoadConfig() {
-			if( !this.ConfigJson.LoadFile() ) {
-				this.ConfigJson.SaveFile();
-			}
-
-			if( this.Config.CanUpdateVersion() ) {
-				this.Config.UpdateToLatestVersion();
-
-				LogHelpers.Log( "Player Statistics updated to " + this.Version.ToString() );
-				this.ConfigJson.SaveFile();
-			}
-		}
 
 		////
 

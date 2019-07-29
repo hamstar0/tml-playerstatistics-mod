@@ -1,7 +1,4 @@
-﻿using HamstarHelpers.Components.Network;
-using HamstarHelpers.Helpers.DebugHelpers;
-using PlayerStatistics.NetProtocols;
-using System;
+﻿using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -48,13 +45,6 @@ namespace PlayerStatistics {
 		private void OnConnectSingle() {
 			var mymod = (PlayerStatisticsMod)this.mod;
 
-			mymod.ConfigJson.LoadFileAsync( ( success ) => {
-				if( !success ) {
-					//mymod.ConfigJson.SaveFile();
-					LogHelpers.Alert( "Player Statistics config could not be loaded." );
-				}
-			} );
-
 			mymod.PlayerStatsUI.ClearPlayers();
 		}
 
@@ -62,8 +52,6 @@ namespace PlayerStatistics {
 			var mymod = (PlayerStatisticsMod)this.mod;
 
 			mymod.PlayerStatsUI.ClearPlayers();
-
-			PacketProtocolRequestToServer.QuickRequestToServer<ModSettingsProtocol>( -1 );
 		}
 
 		private void OnConnectServer( Player givenPlayer ) { }

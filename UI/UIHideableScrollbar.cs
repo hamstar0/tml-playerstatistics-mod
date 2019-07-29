@@ -1,5 +1,5 @@
 ﻿using System;
-using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;

@@ -262,3 +262,4 @@ paket-files/
 __pycache__/
 *.pyc
 /playerstatistics todo.txt
+/Properties

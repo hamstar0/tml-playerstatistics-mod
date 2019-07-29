@@ -1,6 +1,5 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.NetHelpers;
-using HamstarHelpers.Services.ControlPanel;
+﻿using HamstarHelpers.Helpers.Net;
+using HamstarHelpers.Services.UI.ControlPanel;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -88,7 +87,7 @@ namespace PlayerStatistics.Logic {
 			var mymod = PlayerStatisticsMod.Instance;
 			
 			if( Main.netMode == 1 ) {
-				this.Latency = NetHelpers.GetServerPing();
+				this.Latency = NetPlayHelpers.GetServerPing();
 			}
 
 			if( mymod.PlayerStatsUI.IsInitialized && ControlPanelTabs.GetCurrentTab() == PlayerStatisticsMod.ControlPanelName ) {

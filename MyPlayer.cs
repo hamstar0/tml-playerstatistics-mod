@@ -1,5 +1,5 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Services.ControlPanel;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Services.UI.ControlPanel;
 using PlayerStatistics.Logic;
 using PlayerStatistics.NetProtocols;
 using System;

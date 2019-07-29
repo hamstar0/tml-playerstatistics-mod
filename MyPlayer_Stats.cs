@@ -1,6 +1,6 @@
-﻿using HamstarHelpers.Components.DataStructures;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.DotNET.Extensions;
+using HamstarHelpers.Helpers.TModLoader;
 using System;
 using Terraria;
 using Terraria.ModLoader;
