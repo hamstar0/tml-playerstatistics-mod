@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Components.UI;
+﻿using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using HamstarHelpers.Internals.ControlPanel;

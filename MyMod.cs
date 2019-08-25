@@ -1,4 +1,4 @@
-using HamstarHelpers.Components.UI;
+using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Helpers.TModLoader;
 using HamstarHelpers.Helpers.TModLoader.Mods;
 using HamstarHelpers.Services.Hooks.ExtendedHooks;
