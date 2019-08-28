@@ -6,6 +6,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -32,10 +33,16 @@ namespace PlayerStatistics {
 		public override void PreUpdate() {
 			var mymod = (PlayerStatisticsMod)this.mod;
 
-			if( Main.netMode != 2 ) {
-				this.Logic.UpdateLocal();
-			} else {
+			switch( Main.netMode ) {
+			case NetmodeID.SinglePlayer:
+				this.Logic.UpdateSingle();
+				break;
+			case NetmodeID.MultiplayerClient:
+				this.Logic.UpdateClient();
+				break;
+			case NetmodeID.Server:
 				this.Logic.UpdateServer();
+				break;
 			}
 		}
 

@@ -83,15 +83,24 @@ namespace PlayerStatistics.Logic {
 
 		////////////////
 
-		public void UpdateLocal() {
+		private void UpdateLocal() {
 			var mymod = PlayerStatisticsMod.Instance;
 			string currTab = ControlPanelTabs.GetCurrentTab();
-
-			this.Latency = NetPlayHelpers.GetServerPing();
 
 			if( mymod.PlayerStatsUI.IsInitialized && currTab == PlayerStatisticsMod.ControlPanelName ) {
 				mymod.PlayerStatsUI.Update();
 			}
+		}
+
+		////
+
+		public void UpdateSingle() {
+			this.UpdateLocal();
+		}
+
+		public void UpdateClient() {
+			this.Latency = NetPlayHelpers.GetServerPing();
+			this.UpdateLocal();
 		}
 
 		public void UpdateServer() {
