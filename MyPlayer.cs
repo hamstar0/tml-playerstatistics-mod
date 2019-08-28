@@ -32,7 +32,11 @@ namespace PlayerStatistics {
 		public override void PreUpdate() {
 			var mymod = (PlayerStatisticsMod)this.mod;
 
-			this.Logic.Update();
+			if( Main.netMode != 2 ) {
+				this.Logic.UpdateLocal();
+			} else {
+				this.Logic.UpdateServer();
+			}
 		}
 
 
