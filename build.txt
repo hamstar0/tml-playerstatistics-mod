@@ -1,6 +1,6 @@
 author = hamstar
-version = 1.1.0.2
+version = 1.1.1
 displayName = Player Statistics
-modReferences = HamstarHelpers@5.0.0
+modReferences = HamstarHelpers@5.2.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/pvp-project-making-pvp-great-again.78948/

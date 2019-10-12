@@ -24,7 +24,7 @@ namespace PlayerStatistics {
 
 		////////////////
 
-		public PlayerStatisticsConfig Config => this.GetConfig<PlayerStatisticsConfig>();
+		public PlayerStatisticsConfig Config => ModContent.GetInstance<PlayerStatisticsConfig>();
 
 		public UIPlayerStatsTab PlayerStatsUI;
 
